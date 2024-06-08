@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Postgres.DB;
-using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +42,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 });
-
 
 builder.Services.AddAuthorization();
 
@@ -281,11 +279,11 @@ app.MapPut("/userInfo/{userId}/score", async (int userId, ApplicationDbContext d
         return Results.NotFound("User not found.");
     }
 
-    user.score = dto.NewScore;
-    if (dto.NewScore > user.maxScore)
+    user.score = user.score + dto.NewScore;
+    if (user.score > user.maxScore)
     {
-        user.maxScore = dto.NewScore;
-        user.monthMaxScore = DateTime.UtcNow.ToString("MMMM");
+        user.maxScore = user.score;
+        user.monthMaxScore = DateTime.UtcNow.ToString("MMMM-yyyy");
     }
     await dbContext.SaveChangesAsync();
 
@@ -322,7 +320,7 @@ app.MapPut("/userInfo/{userId}/timeMeasured", async (int userId, ApplicationDbCo
     if (dto.NewTimeMeasured > user.maxTime)
     {
         user.maxTime = dto.NewTimeMeasured;
-        user.monthMaxTime = DateTime.UtcNow.ToString("MMMM");
+        user.monthMaxTime = DateTime.UtcNow.ToString("MMMM-yyyy");
     }
     await dbContext.SaveChangesAsync();
 
