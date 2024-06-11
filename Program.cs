@@ -142,7 +142,7 @@ app.MapGet("/noiseLevelsByDay", async (double latitude, double longitude, DateTi
 
     if (noiseLevels.Count == 0)
     {
-        return Results.NotFound("No noise level data found for the given coordinates and day.");
+        return Results.Ok("No noise level data found for the given coordinates and day.");
     }
 
     return Results.Ok(noiseLevels);
@@ -159,7 +159,7 @@ app.MapGet("/noiseLevelsByMonth", async (double latitude, double longitude, Date
 
     if (noiseLevels.Count == 0)
     {
-        return Results.NotFound("No noise level data found for the given coordinates and month.");
+        return Results.Ok("No noise level data found for the given coordinates and month.");
     }
 
     return Results.Ok(noiseLevels);
@@ -176,7 +176,7 @@ app.MapGet("/noiseLevelsByYear", async (double latitude, double longitude, DateT
 
     if (noiseLevels.Count == 0)
     {
-        return Results.NotFound("No noise level data found for the given coordinates and year.");
+        return Results.Ok("No noise level data found for the given coordinates and year.");
     }
 
     return Results.Ok(noiseLevels);
@@ -195,7 +195,7 @@ app.MapGet("/noiseLevelsByWeek", async (double latitude, double longitude, DateT
 
     if (noiseLevels.Count == 0)
     {
-        return Results.NotFound("No noise level data found for the given coordinates and week.");
+        return Results.Ok("No noise level data found for the given coordinates and week.");
     }
 
     return Results.Ok(noiseLevels);
